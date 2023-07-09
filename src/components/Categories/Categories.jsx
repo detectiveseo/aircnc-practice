@@ -7,7 +7,7 @@ const Categories = () => {
         <div className='flex items-center justify-between overflow-x-auto'>
             {categories.map((categorie, index) => {
                 return (
-                    <CategoryBox categorie={categorie} />
+                    <CategoryBox key={index} categorie={categorie} />
                 )
             })}
             
