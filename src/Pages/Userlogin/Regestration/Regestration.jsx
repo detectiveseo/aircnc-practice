@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
 import { ImSpinner10 } from 'react-icons/im'
 import useAuthContext from '../../../components/Shared/Hooks/useAuthContext';
@@ -7,9 +7,9 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 
-const Regestration = ({ loading, setLoading, createUser, updateUserProfile, setLogin, handleSingIn }) => {
+const Regestration = ({ loading, setLoading, createUser, updateUserProfile, setLogin, handleSingIn, from }) => {
 
-    // axios.post(`"https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_Host}`)
+    const navigate = useNavigate();
 
     const handleSingUpForm = (event) => {
         event.preventDefault();
@@ -28,8 +28,8 @@ const Regestration = ({ loading, setLoading, createUser, updateUserProfile, setL
             setLoading(true);
             axios.post(postImgUrl, formData).then(res => {
                 const imageUrl = res.data.data.display_url;
-                updateUserProfile(name, imageUrl).then(res => {
-                    console.log(res)
+                updateUserProfile(name, imageUrl).then(() => {
+                    navigate(from, {replace: true})
                 })
             })
         })

@@ -55,6 +55,7 @@ const UserLogin = () => {
                         createUser={createUser}
                         updateUserProfile={updateUserProfile}
                         handleSingIn={handleSingIn}
+                        from={from}
                         setLogin={setLogin} />
             }
         </div>

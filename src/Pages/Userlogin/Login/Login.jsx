@@ -29,7 +29,7 @@ const Login = ({ signIn, loading, setLoading, resetPassword, from, handleSingIn,
   const emailRef = useRef();
   const handlePasswordReset = () => {
     const emailValue = emailRef.current.value;
-    if (emailValue === "" || emailValue === NaN || emailValue === undefined || null) {
+    if (emailValue === "" || emailValue === false) {
       toast.error("Please enter your email address")
     } else {
       resetPassword(emailValue).then(res => {
