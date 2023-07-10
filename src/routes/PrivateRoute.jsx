@@ -1,13 +1,14 @@
 import { useContext } from 'react'
 import { AuthContext } from '../providers/AuthProvider'
 import { Navigate, useLocation } from 'react-router'
+import DotLoading from '../components/Shared/Loader/DotLoading'
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext)
   const location = useLocation()
 
   if (loading) {
-    return <p>Loading.....</p>
+    return <DotLoading />
   }
 
   if (user) {
