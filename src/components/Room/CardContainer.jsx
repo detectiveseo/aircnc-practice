@@ -4,7 +4,7 @@ import { useEffect, CSSProperties, useState } from 'react';
 import Card from './Card';
 import DotLoading from '../Shared/Loader/DotLoading';
 import { useSearchParams } from 'react-router-dom';
-import NotFound from '../Shared/Headings/NotFound';
+import Headings from '../Shared/Headings/Headings';
 
 
 const CardContainer = () => {
@@ -36,7 +36,7 @@ const CardContainer = () => {
                     rooms.map((room, index) => <Card key={index} room={room} />)
                 }
             </div> : <div className='h-[40vh] flex justify-center items-center'>
-                <NotFound
+                <Headings
                     title="Sorry No Avilabe Location"
                     subtitle="Please Select Other Categoris"
                     center={true}

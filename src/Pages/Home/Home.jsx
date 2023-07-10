@@ -1,6 +1,6 @@
 import React from 'react';
 import Categories from '../../components/Categories/Categories.jsx'
-import CardContainer from '../../components/RoomsCard/CardContainer.jsx';
+import CardContainer from '../../components/Room/CardContainer.jsx';
 
 const Home = () => {
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotFound = ({ title, subtitle, center }) => {
+const Headings = ({ title, subtitle, center }) => {
     return (
         <div className={center ? 'text-center' : 'text-start'}>
             <div className='text-2xl font-bold'>{title}</div>
@@ -9,4 +9,4 @@ const NotFound = ({ title, subtitle, center }) => {
     );
 };
 
-export default NotFound;
+export default Headings;
