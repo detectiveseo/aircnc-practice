@@ -77,12 +77,12 @@ const Login = ({setLogin}) => {
         </div>
         <p className='px-6 text-sm text-center text-gray-400'>
           Don't have an account yet?{' '}
-          <a
+          <span
             onClick={() => setLogin(value => !value)}
             className=' cursor-pointer hover:underline hover:text-rose-500 text-gray-600'
           >
             Sign up
-          </a>
+          </span>
           .
         </p>
       </div>

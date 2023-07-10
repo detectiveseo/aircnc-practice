@@ -4,7 +4,8 @@ import { useCallback, useContext, useState } from 'react'
 import { AuthContext } from '../../../providers/AuthProvider'
 import { Link } from 'react-router-dom'
 
-const MenuDropdown = () => {
+const MenuDropdown = ({SetLoginFun}) => {
+  const {setLogin} = SetLoginFun
   const { user, logOut } = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = useCallback(() => {
@@ -46,12 +47,14 @@ const MenuDropdown = () => {
               <>
                 <Link
                   to='/login'
+                  onClick={() => setLogin(true)}
                   className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                 >
                   Login
                 </Link>
                 <Link
-                  to='/signup'
+                onClick={() => setLogin(false)}
+                  to='/login'
                   className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                 >
                   Sign Up
