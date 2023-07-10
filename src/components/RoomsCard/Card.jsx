@@ -3,6 +3,7 @@ import HeartBtn from '../Buttons/HeartBtn';
 
 const Card = ({ room }) => {
     const { category, dateRange, image, location, price } = room;
+    console.log(category)
     return (
         <div className='col-span-1 cursor-pointer group'>
             <div className='flex flex-col gap-2 w-full'>
