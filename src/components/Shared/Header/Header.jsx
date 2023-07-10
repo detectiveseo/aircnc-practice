@@ -8,7 +8,7 @@ import useSetlogin from '../Hooks/useSetlogin';
 const Header = () => {
     const SetLoginFun = useSetlogin();
     return (
-        <div className='w-full h-28 flex justify-center items-center fixed top-0 shadow-sm z-10'>
+        <div className='w-full bg-slate-50 h-28 flex justify-center items-center fixed top-0 shadow-sm z-10'>
             <Container>
                 <div className='flex justify-between'>
                         <Logo />

@@ -1,8 +1,30 @@
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
+import { ImSpinner10 } from 'react-icons/im'
+import useAuthContext from '../../../components/Shared/Hooks/useAuthContext'
+import { toast } from 'react-hot-toast';
 
-const Login = ({setLogin}) => {
+const Login = ({signIn, loading, setLoading, handleSingIn, setLogin }) => {
+  const navigate = useNavigate();
+
+  // email password login form handle 
+  const handleLoginSubmit = (event) => {
+    event.preventDefault()
+    setLoading(true);
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+    signIn().then(res => {
+      setLoading(false)
+    }).catch(err => {
+      setLoading(false);
+      toast.error(err.message);
+    })
+  }
+
+
+
   return (
     <div className='flex justify-center items-center min-h-screen'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
@@ -13,6 +35,7 @@ const Login = ({setLogin}) => {
           </p>
         </div>
         <form
+          onSubmit={handleLoginSubmit}
           noValidate=''
           action=''
           className='space-y-6 ng-untouched ng-pristine ng-valid'
@@ -53,8 +76,7 @@ const Login = ({setLogin}) => {
             <button
               type='submit'
               className='bg-rose-500 w-full rounded-md py-3 text-white'
-            >
-              Continue
+            >{!loading? "Continue" : <ImSpinner10 className='m-auto animate-spin' size="24" />}
             </button>
           </div>
         </form>
@@ -70,7 +92,9 @@ const Login = ({setLogin}) => {
           </p>
           <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
         </div>
-        <div className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'>
+        <div
+          onClick={() => handleSingIn()}
+          className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'>
           <FcGoogle size={32} />
 
           <p>Continue with Google</p>
