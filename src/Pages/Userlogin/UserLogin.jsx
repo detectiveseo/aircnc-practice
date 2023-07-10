@@ -3,7 +3,7 @@ import Regestration from './Regestration/Regestration';
 import Login from './Login/Login';
 import useSetlogin from '../../components/Shared/Hooks/useSetlogin';
 import useAuthContext from '../../components/Shared/Hooks/useAuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const UserLogin = () => {
     const setLoginFun = useSetlogin();
@@ -23,6 +23,8 @@ const UserLogin = () => {
     } = authIformation;
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.form?.pathname || "/"
 
     // google singin button 
     const handleSingIn = () => {
@@ -42,7 +44,9 @@ const UserLogin = () => {
                         loading={loading}
                         setLoading={setLoading}
                         signIn={signIn}
+                        resetPassword={resetPassword}
                         handleSingIn={handleSingIn}
+                        from={from}
                         setLogin={setLogin} />
                     :
                     <Regestration

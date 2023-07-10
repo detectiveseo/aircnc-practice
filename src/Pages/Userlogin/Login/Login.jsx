@@ -3,8 +3,9 @@ import { FcGoogle } from 'react-icons/fc'
 import { ImSpinner10 } from 'react-icons/im'
 import useAuthContext from '../../../components/Shared/Hooks/useAuthContext'
 import { toast } from 'react-hot-toast';
+import { useRef } from 'react';
 
-const Login = ({signIn, loading, setLoading, handleSingIn, setLogin }) => {
+const Login = ({ signIn, loading, setLoading, resetPassword, from, handleSingIn, setLogin }) => {
   const navigate = useNavigate();
 
   // email password login form handle 
@@ -14,13 +15,32 @@ const Login = ({signIn, loading, setLoading, handleSingIn, setLogin }) => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
-    signIn().then(res => {
+    signIn(email, password).then(res => {
+      console.log(res.user);
       setLoading(false)
+      navigate(from, {replace: true})
     }).catch(err => {
       setLoading(false);
       toast.error(err.message);
     })
+  }
+
+  //handl password reset
+  const emailRef = useRef();
+  const handlePasswordReset = () => {
+    const emailValue = emailRef.current.value;
+    if (emailValue === "" || emailValue === NaN || emailValue === undefined || null) {
+      toast.error("Please enter your email address")
+    } else {
+      resetPassword(emailValue).then(res => {
+        toast.success("Please check your email for reset password")
+        console.log(res);
+        setLoading(false);
+      }).catch(err => {
+        setLoading(false);
+        toast.error(err.message);
+      })
+    }
   }
 
 
@@ -49,6 +69,7 @@ const Login = ({signIn, loading, setLoading, handleSingIn, setLogin }) => {
                 type='email'
                 name='email'
                 id='email'
+                ref={emailRef}
                 required
                 placeholder='Enter Your Email Here'
                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
@@ -76,12 +97,14 @@ const Login = ({signIn, loading, setLoading, handleSingIn, setLogin }) => {
             <button
               type='submit'
               className='bg-rose-500 w-full rounded-md py-3 text-white'
-            >{!loading? "Continue" : <ImSpinner10 className='m-auto animate-spin' size="24" />}
+            >{!loading ? "Continue" : <ImSpinner10 className='m-auto animate-spin' size="24" />}
             </button>
           </div>
         </form>
         <div className='space-y-1'>
-          <button className='text-xs hover:underline hover:text-rose-500 text-gray-400'>
+          <button
+            onClick={handlePasswordReset}
+            className='text-xs hover:underline hover:text-rose-500 text-gray-400'>
             Forgot password?
           </button>
         </div>
