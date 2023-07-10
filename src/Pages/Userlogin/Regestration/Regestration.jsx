@@ -3,9 +3,41 @@ import { Link } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
 import { ImSpinner10 } from 'react-icons/im'
 import useAuthContext from '../../../components/Shared/Hooks/useAuthContext';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 
 const Regestration = ({ loading, setLoading, createUser, updateUserProfile, setLogin, handleSingIn }) => {
+
+    // axios.post(`"https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_Host}`)
+
+    const handleSingUpForm = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const name  = form.name.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        const image = form.image.files[0];
+
+        const formData = new FormData();
+        formData.append("image", image);
+
+        const postImgUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_Host}`
+
+        createUser(email, password).then(res => {
+            setLoading(true);
+            axios.post(postImgUrl, formData).then(res => {
+                const imageUrl = res.data.data.display_url;
+                updateUserProfile(name, imageUrl).then(res => {
+                    console.log(res)
+                })
+            })
+        })
+
+        
+    }
+
+
 
     return (
         <div className='flex justify-center items-center min-h-screen'>
@@ -15,6 +47,7 @@ const Regestration = ({ loading, setLoading, createUser, updateUserProfile, setL
                     <p className='text-sm text-gray-400'>Welcome to AirCNC</p>
                 </div>
                 <form
+                    onSubmit={handleSingUpForm}
                     noValidate=''
                     action=''
                     className='space-y-6 ng-untouched ng-pristine ng-valid'
