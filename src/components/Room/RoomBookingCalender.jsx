@@ -26,4 +26,4 @@ const RoomBookingCalender = () => {
     )
 }
 
-export default RoomBookingCalender
+export default RoomBookingCalender;

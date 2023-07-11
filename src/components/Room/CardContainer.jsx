@@ -17,7 +17,6 @@ const CardContainer = () => {
         axios.get('./Rooms.json').then(res => {
             if (searchCategory) {
                 const rooms = res.data.filter(room => room.category === searchCategory)
-                console.log(rooms)
                 setRooms(rooms);
             } else {
                 setRooms(res.data);

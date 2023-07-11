@@ -5,6 +5,7 @@ import { ImSpinner10 } from 'react-icons/im'
 import useAuthContext from '../../../components/Shared/Hooks/useAuthContext';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { saveUser } from '../../../API/auth';
 
 
 const Regestration = ({ loading, setLoading, createUser, updateUserProfile, setLogin, handleSingIn, from }) => {
@@ -25,6 +26,7 @@ const Regestration = ({ loading, setLoading, createUser, updateUserProfile, setL
         const postImgUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_Host}`
 
         createUser(email, password).then(res => {
+            saveUser(res.user);
             setLoading(true);
             axios.post(postImgUrl, formData).then(res => {
                 const imageUrl = res.data.data.display_url;

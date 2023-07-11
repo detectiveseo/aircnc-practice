@@ -16,7 +16,6 @@ const Login = ({ signIn, loading, setLoading, resetPassword, from, handleSingIn,
     const email = form.email.value;
     const password = form.password.value;
     signIn(email, password).then(res => {
-      console.log(res.user);
       setLoading(false)
       navigate(from, {replace: true})
     }).catch(err => {
@@ -34,7 +33,6 @@ const Login = ({ signIn, loading, setLoading, resetPassword, from, handleSingIn,
     } else {
       resetPassword(emailValue).then(res => {
         toast.success("Please check your email for reset password")
-        console.log(res);
         setLoading(false);
       }).catch(err => {
         setLoading(false);
