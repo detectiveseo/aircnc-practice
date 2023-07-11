@@ -3,7 +3,6 @@ import { toast } from "react-hot-toast"
 
 //sabe user to database
 export const saveUser = (user) => {
-    console.log("from auth save", user.email)
     const userData = {
         email: user.email,
     }
