@@ -6,35 +6,33 @@ import useAuthContext from '../../../components/Shared/Hooks/useAuthContext';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { saveUser } from '../../../API/auth';
+import { imageUpload } from '../../../API/imageUpload';
 
 
 const Regestration = ({ loading, setLoading, createUser, updateUserProfile, setLogin, handleSingIn, from }) => {
 
     const navigate = useNavigate();
 
-    const handleSingUpForm = (event) => {
+    const handleSingUpForm = async (event) => {
+        setLoading(true);
         event.preventDefault();
         const form = event.target;
         const name  = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        const image = form.image.files[0];
 
-        const formData = new FormData();
-        formData.append("image", image);
-
-        const postImgUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_Host}`
-
-        createUser(email, password).then(res => {
-            saveUser(res.user);
-            setLoading(true);
-            axios.post(postImgUrl, formData).then(res => {
-                const imageUrl = res.data.data.display_url;
-                updateUserProfile(name, imageUrl).then(() => {
+        imageUpload(form.image.files[0]).then(url => {
+            createUser(email, password).then(res => {
+                saveUser(res.user);
+                updateUserProfile(name, url).then(() => {
+                    setLoading(false);
                     navigate(from, {replace: true})
                 })
             })
         })
+
+
+        
 
         
     }

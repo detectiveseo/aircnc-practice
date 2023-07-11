@@ -10,7 +10,7 @@ const AddRoom = () => {
     const image = event.target.files[0];
     setUploadButtonText(image.name)
   }
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault()
     setLoading(true);
     const form = event.target;
@@ -24,9 +24,9 @@ const AddRoom = () => {
     // const bathrooms = form.bathrooms.value;
     // const description = form.desciption.value;
     // const category = form.category.value;
-    const imageFile = form.image.files[0];
-    imageUpload(imageFile)
-    console.log("after image upload")
+    imageUpload(form.image.files[0]).then(res => {
+      console.log(res)
+    })
   }
 
   return (
