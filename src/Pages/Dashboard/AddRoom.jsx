@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import AddSingleRoomForm from '../../components/Forms/AddSingleRoomForm';
 import { imageUpload } from '../../API/imageUpload';
 import useUser from '../../Hooks/useUser';
+import roomSaveOnDB from '../../API/roomSaveonDB';
+import { toast } from 'react-hot-toast';
 
 const AddRoom = () => {
   const [loading, setLoading] = useState(false);
@@ -34,28 +36,34 @@ const AddRoom = () => {
     const bathrooms = form.bathrooms.value;
     const description = form.description.value;
     const category = form.category.value;
+    const image = form.image.files[0];
 
-
-    const data = {
-      location,
-      title,
-      from,
-      to,
-      price,
-      total_guest,
-      bedrooms,
-      bathrooms,
-      description,
-      category,
-      userName: user.displayName,
-      userEmail: user.email,
-    }
-
-    console.log(data);
-
-    // imageUpload(form.image.files[0]).then(res => {
-    //   console.log(res)
-    // })
+    imageUpload(image).then(res => {
+      const data = {
+        location,
+        title,
+        from,
+        to,
+        price,
+        total_guest,
+        bedrooms,
+        bathrooms,
+        description,
+        category,
+        image: res,
+        userName: user.displayName,
+        userEmail: user.email,
+      }
+      roomSaveOnDB(data).then(res => {
+        if(res.acknowledged){
+        toast.success("New Room Has been added")
+        setLoading(false)
+      }}
+        ).catch(err => {
+          toast.error("something went wrong, please try again");
+          setLoading(false);
+        })
+    })
   }
 
   return (

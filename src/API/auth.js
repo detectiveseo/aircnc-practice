@@ -6,7 +6,7 @@ export const saveUser = (user) => {
     const userData = {
         email: user.email,
     }
-    axios.put(`http://localhost:5000/user/${user?.email}`, userData, {
+    axios.put(`${import.meta.env.VITE_SERVER_LINK}user/${user?.email}`, userData, {
         headers: {
             'content-type': 'application/json'
         }
