@@ -57,7 +57,8 @@ const AddRoom = () => {
       roomSaveOnDB(data).then(res => {
         if(res.acknowledged){
         toast.success("New Room Has been added")
-        setLoading(false)
+        setLoading(false);
+        form.reset();
       }}
         ).catch(err => {
           toast.error("something went wrong, please try again");
