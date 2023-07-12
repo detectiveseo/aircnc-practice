@@ -3,10 +3,10 @@ import HeartBtn from '../Buttons/HeartBtn';
 import { Link } from 'react-router-dom';
 
 const Card = ({ room }) => {
-    const { category, dateRange, image, location, price } = room;
+    const {_id, category, dateRange, image, location, price } = room;
     return (
         <Link 
-        to={`/room/${location}`}
+        to={`/room/${_id}`}
         className='col-span-1 cursor-pointer group'>
             <div className='flex flex-col gap-2 w-full'>
                 <div className='aspect-square w-full relative overflow-hidden rounded-xl'>

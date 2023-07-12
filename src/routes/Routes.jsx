@@ -6,6 +6,7 @@ import SingleRoom from '../Pages/SingleRoom/SingleRoom'
 import PrivateRoute from './PrivateRoute'
 import Dashboard from '../layouts/Dashboard'
 import AddRoom from '../Pages/Dashboard/AddRoom'
+import useSingleRoom from '../Hooks/useSingleRoom'
 
 export const router = createBrowserRouter([
   {
@@ -21,8 +22,9 @@ export const router = createBrowserRouter([
         element: <UserLogin />
       },
       {
-        path: "/room/:name",
-        element: <PrivateRoute><SingleRoom /></PrivateRoute>
+        path: "/room/:id",
+        element: <PrivateRoute><SingleRoom /></PrivateRoute>,
+        loader: ({params}) => useSingleRoom(params),
       }
     ]
   },
