@@ -5,24 +5,20 @@ import Card from './Card';
 import DotLoading from '../Shared/Loader/DotLoading';
 import { useSearchParams } from 'react-router-dom';
 import Headings from '../Shared/Headings/Headings';
+import useRooms from '../../Hooks/useRooms';
 
 
 const CardContainer = () => {
-    const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [params, setParams] = useSearchParams();
     const searchCategory = params.get('category');
+    const [rooms, setRooms] = useState();
 
     useEffect(() => {
-        axios.get('./Rooms.json').then(res => {
-            if (searchCategory) {
-                const rooms = res.data.filter(room => room.category === searchCategory)
-                setRooms(rooms);
-            } else {
-                setRooms(res.data);
-            }
-            setLoading(false)
-        })
+     useRooms().then(res => {
+        setRooms(res);
+        setLoading(false);
+    });
     }, [searchCategory])
 
     if (loading) {
