@@ -3,18 +3,22 @@ import Avatar from './Avatar'
 import { useCallback, useContext, useState } from 'react'
 import { AuthContext } from '../../../providers/AuthProvider'
 import { Link } from 'react-router-dom'
+import ModalHost from './ModalHost'
 
-const MenuDropdown = ({SetLoginFun}) => {
-  const {setLogin} = SetLoginFun
+const MenuDropdown = ({ SetLoginFun }) => {
+  const { setLogin } = SetLoginFun
   const { user, logOut } = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false)
+  let [isModal, setIsModal] = useState(false)
   const toggleOpen = useCallback(() => {
     setIsOpen(value => !value)
   }, [])
   return (
     <div className='relative'>
       <div className='flex flex-row items-center gap-3'>
-        <div className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
+        <div 
+        onClick={() => setIsModal(true)}
+        className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
           AirCNC your home
         </div>
         <div
@@ -39,15 +43,15 @@ const MenuDropdown = ({SetLoginFun}) => {
             {user ? (
               <div>
                 <div
-                className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
+                  className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
                 >
                   <Link to="/dashboard">Dashboard</Link>
                 </div>
-                
+
                 <div
-                onClick={logOut}
-                className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'>
-                Logout</div>
+                  onClick={logOut}
+                  className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'>
+                  Logout</div>
               </div>
             ) : (
               <>
@@ -59,7 +63,7 @@ const MenuDropdown = ({SetLoginFun}) => {
                   Login
                 </Link>
                 <Link
-                onClick={() => setLogin(false)}
+                  onClick={() => setLogin(false)}
                   to='/login'
                   className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                 >
@@ -70,6 +74,7 @@ const MenuDropdown = ({SetLoginFun}) => {
           </div>
         </div>
       )}
+        <ModalHost isModal={isModal} setIsModal={setIsModal} />
     </div>
   )
 }
