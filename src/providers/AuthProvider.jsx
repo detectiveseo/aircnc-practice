@@ -11,6 +11,7 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import { app } from '../firebase/firebase.config'
+import { singleUserRole } from '../API/auth'
 
 export const AuthContext = createContext(null)
 
@@ -19,6 +20,7 @@ const googleProvider = new GoogleAuthProvider()
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
+  const [role, setRole] = useState("");
   const [loading, setLoading] = useState(true)
 
   const createUser = (email, password) => {
@@ -54,6 +56,10 @@ const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    singleUserRole(user?.email).then(res => setRole(res.role))
+  }, [user])
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser)
       setLoading(false)
@@ -65,6 +71,7 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
+    role,
     loading,
     setLoading,
     createUser,

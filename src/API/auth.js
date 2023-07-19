@@ -12,3 +12,9 @@ export const saveUser = (user) => {
         }
     }).then(() => toast.success(`welcome to aircnc ${user.displayName}`)).catch(err => toast.error(err.message))
 }
+
+export const singleUserRole = async(email) => {
+    return new Promise((resolve, reject) => {
+        axios.get(`${import.meta.env.VITE_SERVER_LINK}user/${email}`).then(res => resolve(res.data)).catch(err => reject(err))
+    }) 
+}
