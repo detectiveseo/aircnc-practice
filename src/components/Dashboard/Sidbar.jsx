@@ -7,23 +7,31 @@ import { FcSettings } from 'react-icons/fc'
 import { AiOutlineBars } from 'react-icons/ai'
 import { BsFillHouseAddFill } from 'react-icons/bs'
 import Logo from '../Buttons/Logo'
+import ModalHost from '../Shared/Header/ModalHost'
 const Sidebar = () => {
   const navigate = useNavigate()
   const [toggle, setToggle] = useState(false)
-  const { user, logOut } = useContext(AuthContext)
+  let [isModal, setIsModal] = useState(false)
+  const [hostDashboard, setHostDashboard] = useState(false);
+  const { user, logOut, host } = useContext(AuthContext)
 
   const [isActive, setActive] = useState('false')
-  const toggleHandler = event => {
-    setToggle(event.target.checked)
-  }
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive)
+  }
+  const handleHost = () => {
+    if (!host) {
+      setIsModal(true)
+    } else {
+      setToggle(true)
+    }
   }
   const handleLogOut = () => {
     logOut()
     navigate('/')
   }
+
   return (
     <>
       {/* Small Screen Navbar */}
@@ -43,9 +51,8 @@ const Sidebar = () => {
       </div>
       {/* Sidebar */}
       <div
-        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-gray-100 w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${
-          isActive && '-translate-x-full'
-        }  md:translate-x-0  transition duration-200 ease-in-out`}
+        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-gray-100 w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${isActive && '-translate-x-full'
+          }  md:translate-x-0  transition duration-200 ease-in-out`}
       >
         <div>
           {/* Branding & Profile Info */}
@@ -84,31 +91,94 @@ const Sidebar = () => {
                   className='inline-flex w-full justify-center items-center px-2 rounded-md cursor-pointer text-gray-800'
                 >
                   <input
-                    onChange={toggleHandler}
                     id='Toggle3'
                     type='checkbox'
                     className='hidden peer'
                   />
-                  <span className='px-4 py-1 rounded-l-md bg-rose-400 peer-checked:bg-gray-300'>
+                  <span
+                  onClick={() => setToggle(false)}
+                   className='px-4 py-1 rounded-l-md bg-rose-400 peer-checked:bg-gray-300'>
                     Guest
                   </span>
-                  <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-rose-400'>
+                  <span
+                    onClick={handleHost}
+                    className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-rose-400'>
                     Host
                   </span>
                 </label>
                 {/* Menu Links */}
-                <NavLink
-                  to='/dashboard/add-room'
-                  className={({ isActive }) =>
-                    `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                      isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                    }`
-                  }
-                >
-                  <BsFillHouseAddFill className='w-5 h-5' />
+                {!toggle ? <>
+                  <NavLink
+                    to='/dashboard/add-room'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <BsFillHouseAddFill className='w-5 h-5' />
 
-                  <span className='mx-4 font-medium'>Add Room</span>
-                </NavLink>
+                    <span className='mx-4 font-medium'>Add Room</span>
+                  </NavLink>
+
+                  <NavLink
+                    to='/dashboard/add-room'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <BsFillHouseAddFill className='w-5 h-5' />
+
+                    <span className='mx-4 font-medium'>Add Room</span>
+                  </NavLink>
+
+                  <NavLink
+                    to='/dashboard/add-room'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <BsFillHouseAddFill className='w-5 h-5' />
+
+                    <span className='mx-4 font-medium'>Add Room</span>
+                  </NavLink></> : <>
+                  <NavLink
+                    to='/dashboard/add-room'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <BsFillHouseAddFill className='w-5 h-5' />
+
+                    <span className='mx-4 font-medium'>Booked Rooms</span>
+                  </NavLink>
+
+                  <NavLink
+                    to='/dashboard/add-room'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <BsFillHouseAddFill className='w-5 h-5' />
+
+                    <span className='mx-4 font-medium'>Payments</span>
+                  </NavLink>
+
+                  <NavLink
+                    to='/dashboard/add-room'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <BsFillHouseAddFill className='w-5 h-5' />
+
+                    <span className='mx-4 font-medium'>Locations</span>
+                  </NavLink>
+                </>}
               </>
             </nav>
           </div>
@@ -119,8 +189,7 @@ const Sidebar = () => {
           <NavLink
             to='/dashboard/profile'
             className={({ isActive }) =>
-              `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+              `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
               }`
             }
           >
@@ -137,6 +206,7 @@ const Sidebar = () => {
             <span className='mx-4 font-medium'>Logout</span>
           </button>
         </div>
+        <ModalHost isModal={isModal} setIsModal={setIsModal} />
       </div>
     </>
   )

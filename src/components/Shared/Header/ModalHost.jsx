@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Dialog } from '@headlessui/react'
 import updateUser from '../../../API/updateUser';
 import { AuthContext } from '../../../providers/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 const ModalHost = ({setIsModal, isModal}) => {
     const {user} = useContext(AuthContext);
@@ -9,7 +10,10 @@ const ModalHost = ({setIsModal, isModal}) => {
     const email = user?.email;
     function handleDeactivate() {
         updateUser(email, role);
-        setIsModal(false)
+        setIsModal(false);
+        toast.success("You've became a host");
+        window.location.reload()
+
     }
     return (
         <Dialog

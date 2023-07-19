@@ -20,7 +20,7 @@ const googleProvider = new GoogleAuthProvider()
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-  const [role, setRole] = useState("");
+  const [host, setHost] = useState("");
   const [loading, setLoading] = useState(true)
 
   const createUser = (email, password) => {
@@ -56,7 +56,7 @@ const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    singleUserRole(user?.email).then(res => setRole(res.role))
+    singleUserRole(user?.email).then(res => setHost(res.role))
   }, [user])
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
-    role,
+    host,
     loading,
     setLoading,
     createUser,

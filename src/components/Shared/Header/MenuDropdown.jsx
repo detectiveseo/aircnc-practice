@@ -7,7 +7,7 @@ import ModalHost from './ModalHost'
 
 const MenuDropdown = ({ SetLoginFun }) => {
   const { setLogin } = SetLoginFun
-  const { user, logOut, role } = useContext(AuthContext)
+  const { user, logOut, host } = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false)
   let [isModal, setIsModal] = useState(false)
   const toggleOpen = useCallback(() => {
@@ -16,13 +16,12 @@ const MenuDropdown = ({ SetLoginFun }) => {
   return (
     <div className='relative'>
       <div className='flex flex-row items-center gap-3'>
-        {role? !role === "Host" : (
-          <div 
+        {user && !host? <button 
+          disabled = {!user}
           onClick={() => setIsModal(true)}
           className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
             AirCNC your home
-          </div>
-        )}
+          </button> : <></>}
         <div
           onClick={toggleOpen}
           className='p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition'
